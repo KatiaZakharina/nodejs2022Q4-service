@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { v4 } from 'uuid';
 
 import { UserEntity } from './entities/user.entity';
-import { UserStore } from './users.storage';
+import { UserStore } from './user.storage';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { ErrorMessages } from './constants/error-messages.constants';
 
 @Injectable()
-export class UsersService {
+export class UserService {
   constructor(private readonly userStore: UserStore) {}
 
   async findAll(): Promise<UserEntity[]> {
