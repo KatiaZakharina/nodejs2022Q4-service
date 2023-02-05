@@ -17,6 +17,10 @@ git clone {repository URL}
 npm install
 ```
 
+## Configuration
+
+Copy .env.example to .env file
+
 ## Running application
 
 ```
