@@ -12,7 +12,7 @@ export class UserService {
   constructor(private readonly userStore: UserStore) {}
 
   async findAll(): Promise<UserEntity[]> {
-    return this.userStore.get().map((user) => new UserEntity(user));
+    return this.userStore.getAll().map((user) => new UserEntity(user));
   }
 
   async findOne(id: string): Promise<UserEntity> {

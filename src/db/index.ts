@@ -10,12 +10,24 @@ export class EntityStore {
     this.entityName = entityName;
   }
 
-  public get = (): any[] => {
+  public getAll = (): any[] => {
     return inMemoryStore[this.entityName];
   };
 
   public getById = (id: string): any => {
     return inMemoryStore[this.entityName].find((item) => item.id === id);
+  };
+
+  public find = (options: { [key: string]: any }): any => {
+    return inMemoryStore[this.entityName].filter((item) => {
+      for (const key in options) {
+        if (options[key] !== item[key]) {
+          return false;
+        }
+      }
+
+      return true;
+    });
   };
 
   public create = (item: any): any => {

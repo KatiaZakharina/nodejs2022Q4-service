@@ -3,13 +3,17 @@ import { Injectable } from '@nestjs/common';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
 import { ArtistStore } from './artist.storage';
+import { TrackStore } from 'track/track.storage';
 
 @Injectable()
 export class ArtistService {
-  constructor(private readonly artistStore: ArtistStore) {}
+  constructor(
+    private readonly artistStore: ArtistStore,
+    private readonly trackStore: TrackStore,
+  ) {}
 
   async findAll() {
-    return this.artistStore.get();
+    return this.artistStore.getAll();
   }
 
   async findOne(id: string) {
@@ -27,6 +31,14 @@ export class ArtistService {
   }
 
   async remove(id: string) {
+    const artistTracks = this.trackStore.find({ artistId: id });
+
+    await Promise.all(
+      artistTracks.map((track) =>
+        this.trackStore.update(track.id, { artistId: null }),
+      ),
+    );
+
     return this.artistStore.remove(id);
   }
 }

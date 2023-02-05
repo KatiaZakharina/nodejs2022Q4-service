@@ -9,7 +9,7 @@ export class TrackService {
   constructor(private readonly trackStore: TrackStore) {}
 
   async findAll() {
-    return this.trackStore.get();
+    return this.trackStore.getAll();
   }
 
   async findOne(id: string) {
