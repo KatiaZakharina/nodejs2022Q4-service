@@ -30,6 +30,12 @@ export class EntityStore {
     });
   };
 
+  public insert = (item: any): any => {
+    inMemoryStore[this.entityName].push(item);
+
+    return item;
+  };
+
   public create = (item: any): any => {
     item.id = uuid();
 
