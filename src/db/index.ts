@@ -31,13 +31,17 @@ export class EntityStore {
       (item) => item.id === id,
     );
 
+    const storedItem = inMemoryStore[this.entityName][index];
+
     if (index === -1) {
       return null;
     }
 
-    inMemoryStore[this.entityName][index] = item;
+    const updatedItem = { ...storedItem, ...item };
 
-    return item;
+    inMemoryStore[this.entityName][index] = updatedItem;
+
+    return updatedItem;
   };
 
   public remove = (id: string): boolean => {

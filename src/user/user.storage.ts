@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { EntityStore } from 'db/index';
+import { EntityStore } from 'db';
 
 @Injectable()
 export class UserStore extends EntityStore {
