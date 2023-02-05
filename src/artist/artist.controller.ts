@@ -14,7 +14,6 @@ import {
 import { ArtistService } from './artist.service';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
-import { ErrorMessages } from './constants/error-messages.constants';
 
 @Controller('artist')
 export class ArtistController {
@@ -32,7 +31,7 @@ export class ArtistController {
     const artist = await this.artistService.findOne(id);
 
     if (!artist) {
-      throw new NotFoundException(ErrorMessages.ARTIST_NOT_FOUND);
+      throw new NotFoundException();
     }
 
     return artist;
@@ -48,26 +47,22 @@ export class ArtistController {
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() updateArtistDto: UpdateArtistDto,
   ) {
-    try {
-      return await this.artistService.update(id, updateArtistDto);
-    } catch (error) {
-      if (error.message === ErrorMessages.ARTIST_NOT_FOUND) {
-        throw new NotFoundException();
-      }
-      throw error;
+    const updatedArtist = await this.artistService.update(id, updateArtistDto);
+
+    if (!updatedArtist) {
+      throw new NotFoundException();
     }
+
+    return updatedArtist;
   }
 
   @Delete(':id')
   @HttpCode(204)
   async remove(@Param('id', new ParseUUIDPipe()) id: string) {
-    try {
-      await this.artistService.remove(id);
-    } catch (error) {
-      if (error.message === ErrorMessages.ARTIST_NOT_FOUND) {
-        throw new NotFoundException();
-      }
-      throw error;
+    const isDeleted = await this.artistService.remove(id);
+
+    if (!isDeleted) {
+      throw new NotFoundException();
     }
   }
 }
