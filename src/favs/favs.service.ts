@@ -8,10 +8,11 @@ import { AlbumStore } from 'album/album.storage';
 import { ArtistStore } from 'artist/artist.storage';
 import { TrackStore } from 'track/track.storage';
 import { FavEntity } from './entities/fav.entity';
+import { FavsStore } from './interfaces/favs-store';
 
 @Injectable()
 export class FavsService {
-  private favsStore: FavEntity;
+  private favsStore: FavsStore;
 
   constructor(
     private readonly trackStore: TrackStore,
@@ -26,7 +27,21 @@ export class FavsService {
   }
 
   async findAll() {
-    return this.favsStore;
+    const favsEntities = {} as FavEntity;
+
+    favsEntities.tracks = this.favsStore.tracks.map(
+      (trackId) => this.trackStore.getById(trackId) || {},
+    );
+
+    favsEntities.albums = this.favsStore.albums.map(
+      (albumId) => this.albumStore.getById(albumId) || {},
+    );
+
+    favsEntities.artists = this.favsStore.artists.map(
+      (artistId) => this.artistStore.getById(artistId) || {},
+    );
+
+    return favsEntities;
   }
 
   async addAlbum(id: string) {
@@ -36,11 +51,11 @@ export class FavsService {
       throw new UnprocessableEntityException();
     }
 
-    this.favsStore.albums.push(album);
+    this.favsStore.albums.push(id);
   }
 
   async removeAlbum(id: string) {
-    const index = this.favsStore.albums.findIndex((album) => album.id === id);
+    const index = this.favsStore.albums.findIndex((albumId) => albumId === id);
 
     if (index === -1) {
       throw new NotFoundException();
@@ -56,11 +71,11 @@ export class FavsService {
       throw new UnprocessableEntityException();
     }
 
-    this.favsStore.tracks.push(track);
+    this.favsStore.tracks.push(id);
   }
 
   async removeTrack(id: string) {
-    const index = this.favsStore.tracks.findIndex((track) => track.id === id);
+    const index = this.favsStore.tracks.findIndex((trackId) => trackId === id);
 
     if (index === -1) {
       throw new NotFoundException();
@@ -76,12 +91,12 @@ export class FavsService {
       throw new UnprocessableEntityException();
     }
 
-    this.favsStore.artists.push(artist);
+    this.favsStore.artists.push(id);
   }
 
   async removeArtist(id: string) {
     const index = this.favsStore.artists.findIndex(
-      (artist) => artist.id === id,
+      (artistId) => artistId === id,
     );
 
     if (index === -1) {
