@@ -1,0 +1,42 @@
+services:  
+
+  database:
+    container_name: postgres_db
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: ./docker/db/Dockerfile
+    restart: always
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    volumes:
+      - db-volume:/var/lib/postgresql/data
+    networks:
+      - database-network
+
+  api:
+    container_name: api
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    restart: always
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      - database
+    networks:
+      - database-network
+
+volumes:
+  db-volume:
+
+networks:
+  database-network:
+    driver: bridge
