@@ -4,11 +4,13 @@
 
 - Git - [Download & Install Git](https://git-scm.com/downloads).
 - Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
+- Docker - [Download & Install Docker](https://docs.docker.com/get-docker/)   
+***Note that the installation process may vary depending on your operating system. For example, on Windows or macOS, you may need to install Docker Desktop, while on Linux, you may need to install Docker Engine separately.***
 
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone https://github.com/KatiaZakharina/nodejs2022Q4-service.git
 ```
 
 ## Installing NPM modules
@@ -23,8 +25,10 @@ Copy .env.example to .env file
 
 ## Running application
 
+To run this app in detached mode run:
+
 ```
-npm start
+docker-compose up -d
 ```
 
 After starting the app on port (4000 as default) you can open
