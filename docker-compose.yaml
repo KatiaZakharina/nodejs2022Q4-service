@@ -1,5 +1,4 @@
-services:  
-
+services:
   database:
     container_name: postgres_db
     env_file:

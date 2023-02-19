@@ -35,6 +35,29 @@ After starting the app on port (4000 as default) you can open
 in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
 For more information about OpenAPI/Swagger please visit https://swagger.io/.
 
+
+## Docker Scan
+
+To scan the API, you can run the following command:
+
+```
+npm run docker:scan-api
+```
+
+To scan the database, you can run the following command:
+
+```
+npm run docker:scan-db
+```
+
+***If you encounter the error "failed to get DockerScanID: You need to be logged in to Docker Hub to use the scan feature"***
+
+Log in using following command:
+
+```
+docker login
+```
+
 ## Testing
 
 After application running open new terminal and enter:
