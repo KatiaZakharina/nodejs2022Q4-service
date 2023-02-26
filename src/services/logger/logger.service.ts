@@ -17,18 +17,16 @@ export class CustomLoggerService extends ConsoleLogger {
     options: ConsoleLoggerOptions,
     private readonly fileLogger: FileLoggerService,
   ) {
-    const DEFAULT_LOG_LEVEL = LogLevelConst.ERROR;
-
     super(context, options);
 
-    this.logLevel = (process.env.LOG_LEVEL as LogLevel) ?? DEFAULT_LOG_LEVEL;
+    this.logLevel = (process.env.LOG_LEVEL as LogLevel) ?? LogLevelConst.ERROR;
   }
 
   log(message: string) {
     super.log(message);
   }
-  error(message: string, trace: string) {
-    super.error(message, trace);
+  error(message: string) {
+    super.error(message);
   }
   warn(message: string) {
     super.warn(message);

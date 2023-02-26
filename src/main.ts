@@ -10,17 +10,14 @@ import { readFile } from 'fs/promises';
 import { CustomLoggerService } from 'services/logger/logger.service';
 
 import { AppModule } from './app.module';
-import { CustomExceptionFilter } from 'exception-filter';
-import { ConfigService } from '@nestjs/config';
+import { CustomExceptionFilter } from 'filters/exception-filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
   });
 
-  const configService = app.get(ConfigService);
-  const port = configService.get<string>('port');
-
+  const port = parseInt(process.env.port, 10) || 4000;
   const logger = app.get(CustomLoggerService);
   app.useLogger(logger);
 
@@ -30,13 +27,14 @@ async function bootstrap() {
 
   process.on('unhandledRejection', (error) => {
     logger.error(
-      '[Unhandled Rejection]',
-      (error as any)?.message || 'Something went wrong',
+      `[Unhandled Rejection] ${
+        (error as any)?.message || 'Something went wrong'
+      }`,
     );
   });
 
   process.on('uncaughtException', (error) => {
-    logger.error('[Uncaught Exception]', error.message);
+    logger.error(`[Uncaught Exception] ${error.message}`);
   });
 
   const documentPath = join(dirname(__dirname), 'doc', 'api.yaml');
