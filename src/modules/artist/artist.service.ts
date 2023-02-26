@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
 import { ArtistStore } from './artist.storage';
-import { TrackStore } from 'track/track.storage';
+import { TrackStore } from 'modules/track/track.storage';
 
 @Injectable()
 export class ArtistService {

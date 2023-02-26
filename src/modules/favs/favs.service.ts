@@ -4,9 +4,9 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 
-import { AlbumStore } from 'album/album.storage';
-import { ArtistStore } from 'artist/artist.storage';
-import { TrackStore } from 'track/track.storage';
+import { AlbumStore } from 'modules/album/album.storage';
+import { ArtistStore } from 'modules/artist/artist.storage';
+import { TrackStore } from 'modules/track/track.storage';
 import { FavEntity } from './entities/fav.entity';
 import { FavsStore } from './interfaces/favs-store';
 

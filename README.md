@@ -13,6 +13,10 @@
 git clone https://github.com/KatiaZakharina/nodejs2022Q4-service.git
 ```
 
+```
+git checkout logging-error-handling
+```
+
 ## Installing NPM modules
 
 ```

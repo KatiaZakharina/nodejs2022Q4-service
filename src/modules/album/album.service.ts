@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { TrackStore } from 'track/track.storage';
+import { TrackStore } from 'modules/track/track.storage';
 
 import { AlbumStore } from './album.storage';
 import { CreateAlbumDto } from './dto/create-album.dto';
